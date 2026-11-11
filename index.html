@@ -1,83 +1,365 @@
 <!doctype html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#17120f" />
-  <meta name="description" content="เมนูหม่าล่าทอด ดูราคาและรายการอาหารในร้าน" />
-  <title>หม่าล่าทอด | เมนูร้าน</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#d8121d" />
+  <meta name="description" content="เมนูร้านล่าทอด หม่าล่าทอด ดูรายการอาหารและราคาได้ง่าย ๆ" />
+  <meta property="og:title" content="ล่าทอด • เมนูหม่าล่าทอด" />
+  <meta property="og:description" content="ดูเมนูและราคาหม่าล่าทอด เริ่มแค่ไม้ละ 10 บาท" />
+  <title>ล่าทอด • เมนูหม่าล่าทอด</title>
+  <link rel="icon" href="images/logo.png" />
+  <link rel="apple-touch-icon" href="images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,600;0,800;1,800&family=Mali:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js" defer></script>
   <style>
-    :root { --bg:#17120f;--panel:#251d18;--panel2:#32251c;--gold:#ffcb6b;--orange:#ff782f;--text:#fff8ec;--muted:#c9b9a8; }
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans Thai',Tahoma,sans-serif;line-height:1.5}
-    .hero{padding:46px 20px 32px;text-align:center;background:radial-gradient(circle at 50% 0%,#723017 0%,#311c16 45%,#17120f 100%)}
-    .eyebrow{display:inline-block;border:1px solid #9c5735;border-radius:99px;padding:6px 14px;color:var(--gold);font-size:13px;letter-spacing:.5px}
-    h1{font-size:clamp(36px,8vw,58px);line-height:1.1;margin:18px 0 10px;color:var(--gold)}.hero p{color:#f2d6bc;margin:0 auto;max-width:440px}
-    .hero-art{font-size:75px;margin:16px 0 6px;filter:drop-shadow(0 10px 18px #0008)}
-    .container{max-width:980px;margin:auto;padding:20px 16px 55px}.notice{background:#35251b;border:1px solid #6a4631;border-radius:16px;padding:15px 18px;margin-bottom:20px;color:#f9ddba;font-size:14px}
-    .toolbar{position:sticky;top:0;z-index:2;background:#17120ff2;backdrop-filter:blur(12px);padding:12px 0 14px}
-    input{width:100%;border:1px solid #5b4433;background:#30231c;border-radius:12px;padding:13px 16px;font:inherit;color:white;outline:none}input:focus{border-color:var(--gold)}
-    .filters{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}
-    button{cursor:pointer;font:inherit;border-radius:999px;border:1px solid #614532;background:#30231c;color:#f6e4d0;padding:8px 16px;white-space:nowrap}button.active{background:var(--orange);color:#1c100a;border-color:var(--orange);font-weight:750}
-    .section-title{margin:24px 0 14px;font-size:24px;color:var(--gold)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-    .item{background:var(--panel);border:1px solid #49372b;border-radius:18px;overflow:hidden}.art{height:142px;display:flex;align-items:center;justify-content:center;font-size:67px;background:radial-gradient(circle at 50% 35%,#75452a,#39241b 75%);text-shadow:0 8px 14px #0005}
-    .details{padding:13px}.name{font-weight:750;font-size:17px}.desc{font-size:12px;color:var(--muted);margin:4px 0 12px;min-height:18px}.price{font-size:22px;font-weight:850;color:var(--gold)}.unit{font-size:12px;color:var(--muted);font-weight:400}
-    .empty{text-align:center;color:var(--muted);padding:50px 10px}.footer{text-align:center;color:var(--muted);border-top:1px solid #3e3027;padding:28px 16px;font-size:13px}
-    @media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.art{height:185px}.container{padding-left:24px;padding-right:24px}}
+    :root{
+      --chili:#d8121d; --chili-deep:#8f0b14; --ink:#1d0b0a; --cream:#fff4de; --paper:#fffbf1;
+      --flame:#ff8a1f; --yolk:#ffc83d; --leaf:#2e8b3f; --muted:#7a5a50;
+      color-scheme:light;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--cream);background-image:radial-gradient(#e8c79c 1.2px,transparent 1.7px);background-size:22px 22px;color:var(--ink);font-family:Mali,Kanit,sans-serif;line-height:1.6;-webkit-text-size-adjust:100%}
+    button,input{font:inherit;color:inherit}button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    :focus-visible{outline:3px solid var(--flame);outline-offset:3px}
+    [v-cloak]{display:none}
+    .shell{max-width:1100px;margin:auto;padding:0 20px}
+
+    /* ticker */
+    .marquee{background:var(--yolk);border-bottom:2.5px solid var(--ink);overflow:hidden;white-space:nowrap;font:600 13px/34px Kanit,sans-serif}
+    .marquee-track{display:inline-block;animation:slide 30s linear infinite}
+    .marquee-track span{display:inline-block;padding-right:28px}
+    @keyframes slide{to{transform:translateX(-25%)}}
+
+    /* hero = street-stall awning */
+    .hero{position:relative;z-index:2;margin-bottom:22px;padding:26px 0 34px;color:#fff;background:var(--chili);background-image:radial-gradient(#b80f1a 2.2px,transparent 2.8px);background-size:20px 20px}
+    .hero:after{content:"";position:absolute;left:0;right:0;bottom:-18px;height:18px;background:radial-gradient(circle at 14px 0,var(--chili) 0 12px,var(--ink) 12.5px 15px,transparent 15.5px) 0 0/28px 18px repeat-x}
+    .hero-in{display:grid;gap:14px;justify-items:center;text-align:center}
+    .hero-logo{position:relative;width:min(64vw,260px)}
+    
+.hero-logo img {
+  display: block;
+  width: 100%;
+
+  filter: drop-shadow(
+    5px 6px 0 var(--chili-deep)
+  );
+
+  transform-origin: center bottom;
+
+  animation: logoDance 5s ease-in-out infinite;
+}
+
+@keyframes logoDance {
+
+  /* เริ่มต้น */
+  0% {
+    transform: rotate(-4deg) scale(1);
+  }
+
+  /* เด้งขึ้น */
+  6% {
+    transform: translateY(-12px)
+               rotate(-9deg)
+               scale(1.06);
+  }
+
+  /* โยกขวา */
+  12% {
+    transform: translateY(0)
+               rotate(6deg)
+               scale(1);
+  }
+
+  /* โยกซ้าย */
+  18% {
+    transform: rotate(-7deg);
+  }
+
+  /* กลับมาตรง */
+  25% {
+    transform: rotate(-4deg) scale(1);
+  }
+
+  /* หยุดพัก */
+  30%, 100% {
+    transform: rotate(-4deg) scale(1);
+  }
+}
+
+    @keyframes pop{from{transform:scale(.82) rotate(-12deg);opacity:0}}
+    .badge{position:absolute;left:-6%;bottom:4%;width:78px;height:78px;border-radius:50%;background:var(--yolk);border:2.5px solid var(--ink);box-shadow:0 4px 0 var(--ink);display:grid;place-content:center;text-align:center;transform:rotate(-10deg);color:var(--ink);font-family:Kanit,sans-serif}
+    .badge span{font-size:11px;font-weight:600;line-height:1}.badge b{font-size:25px;font-weight:800;line-height:1.1}
+    .hero h1{margin:0;font:italic 800 clamp(34px,9.5vw,70px)/1.3 Kanit,sans-serif;color:#fff7e6;-webkit-text-stroke:7px var(--ink);paint-order:stroke fill;filter:drop-shadow(0 4px 0 var(--chili-deep))}
+    .hero p{margin:6px auto 18px;max-width:30ch;font-size:15px;color:#ffe9d6}
+    .btn{display:inline-block;background:var(--yolk);color:var(--ink);border:2.5px solid var(--ink);border-radius:999px;padding:10px 26px;font:800 17px/1.5 Kanit,sans-serif;box-shadow:0 5px 0 var(--ink);transition:transform .1s,box-shadow .1s}
+    .btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+
+    /* menu */
+    main{padding:14px 0 56px}
+    .head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+    h2{margin:0;font:italic 800 clamp(28px,6vw,40px)/1.4 Kanit,sans-serif}
+    .count{background:var(--ink);color:var(--yolk);font:600 13px/1.5 Kanit,sans-serif;padding:3px 13px;border-radius:99px;white-space:nowrap}
+    .search{display:flex;align-items:center;gap:10px;background:var(--paper);border:2.5px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);padding:0 14px}
+    .search svg{flex:none;width:22px;height:22px;stroke:var(--chili);fill:none;stroke-width:2.6;stroke-linecap:round}
+    .search input{width:100%;height:48px;border:0;outline:0;background:transparent;font-size:16px}
+    .search input::placeholder{color:#a58a7d}
+    .search:focus-within{outline:3px solid var(--flame);outline-offset:3px}
+    .tabs-wrap{position:sticky;top:0;z-index:5;margin:14px -20px 0;padding:10px 20px 8px;background:var(--cream);border-bottom:2px dashed #1d0b0a33}
+    .tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+    .tab{flex:none;background:var(--paper);border:2.5px solid var(--ink);border-radius:99px;padding:5px 14px;font:600 14px/1.6 Kanit,sans-serif;box-shadow:0 3px 0 var(--ink);white-space:nowrap}
+    .tab i{font-style:normal;font-size:12px;opacity:.65;margin-left:3px}
+    .tab.active{background:var(--chili);color:#fff}
+    .tab:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px;margin-top:20px}
+    .food{display:block;width:100%;padding:0;text-align:left;background:var(--paper);border:2.5px solid var(--ink);border-radius:20px;box-shadow:0 5px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+    .food:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+    @media(hover:hover){.food:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--ink)}}
+    .tone-meat{--tint:#ffd9c9;--accent:var(--chili)}.tone-sausage{--tint:#ffe7b3;--accent:#e8730c}.tone-veg{--tint:#d8edc8;--accent:var(--leaf)}
+    .photo{position:relative;aspect-ratio:1;display:grid;place-items:center;background:var(--tint,#ffe7b3);border-bottom:2.5px solid var(--ink);border-radius:17px 17px 0 0;overflow:hidden}
+    .photo img{width:88%;height:88%;object-fit:contain;filter:drop-shadow(0 6px 5px #3c140a40)}
+    .tag{position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:5px;background:var(--paper);border:2px solid var(--ink);border-radius:99px;padding:0 9px;font:600 11px/1.7 Kanit,sans-serif}
+    .tag:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent,var(--chili))}
+    .price-badge{position:absolute;right:8px;bottom:8px;background:var(--chili);color:#fff;border:2.5px solid var(--ink);border-radius:12px;padding:0 10px;font:800 21px/1.4 Kanit,sans-serif;transform:rotate(-4deg);box-shadow:2px 3px 0 var(--ink)}
+    .price-badge small{font-size:11px;font-weight:600;margin-left:2px}
+    .info{padding:10px 12px 14px}
+    .name{font:600 16px/1.45 Kanit,sans-serif;min-height:2.9em}
+    .empty{margin-top:24px;text-align:center;padding:44px 20px;border:2.5px dashed var(--ink);border-radius:20px;background:var(--paper)}
+    .empty strong{display:block;font:800 20px/1.5 Kanit,sans-serif}.empty p{color:var(--muted);margin:4px 0 16px}
+
+    .poster{margin-top:48px;display:grid;grid-template-columns:1fr 104px;gap:18px;align-items:center;background:var(--chili-deep);color:#fff;border:2.5px solid var(--ink);border-radius:24px;box-shadow:0 6px 0 var(--ink);padding:22px}
+    .poster h2{font-size:clamp(22px,5vw,32px)}
+    .poster p{margin:6px 0 16px;font-size:14px;color:#ffe0cf}
+    .poster img{width:100%;height:150px;object-fit:cover;object-position:top;border:2.5px solid var(--ink);border-radius:12px;background:var(--paper);transform:rotate(3deg)}
+
+    .pay{margin-top:48px}
+    .pay-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:6px}
+    
+/* การ์ด QR Code */
+.pay-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 6px;
+  align-items: stretch;
+}
+
+.pay-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--paper);
+  border: 2.5px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 0 5px 0 var(--ink);
+  overflow: hidden;
+}
+
+/* ให้พื้นที่รูป QR Code เท่ากัน */
+.thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 0;
+  border-bottom: 2.5px solid var(--ink);
+  background: var(--tint);
+  overflow: hidden;
+}
+
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ให้พื้นที่ข้อความและปุ่มจัดตำแหน่งเท่ากัน */
+.pay-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  text-align: center;
+}
+
+.pay-body h3 {
+  margin: 0;
+  font: italic 800 18px/1.5 Kanit, sans-serif;
+}
+
+.pay-body .btn:first-of-type {
+  margin-top: auto;
+}
+
+.pay-body .btn {
+  width: 100%;
+  padding: 7px 12px;
+  font-size: 15px;
+  box-shadow: 0 4px 0 var(--ink);
+}
+
+    .thumb{display:block;padding:0;border:0;border-bottom:2.5px solid var(--ink);background:var(--tint);aspect-ratio:1}
+    .thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 45%}
+    .pay-body{display:grid;gap:8px;padding:10px 12px 14px;text-align:center}
+    .pay-body h3{margin:0;font:italic 800 18px/1.5 Kanit,sans-serif}
+    .pay-body .btn{width:100%;padding:5px 12px;font-size:15px;box-shadow:0 4px 0 var(--ink)}
+    .btn.line{background:#06c755}.btn.alt{background:var(--paper)}
+    .hint{margin:12px 4px 0;font-size:13px;color:var(--muted)}
+    @media(min-width:640px){.pay-grid{max-width:620px;gap:20px}}
+    footer{background:var(--ink);color:#ffdfce;text-align:center;padding:30px 16px calc(30px + env(safe-area-inset-bottom));font-size:13px}
+    footer img{width:76px;height:76px;object-fit:contain}
+    footer strong{display:block;color:#fff;font:800 22px/1.5 Kanit,sans-serif}footer p{margin:4px 0;opacity:.8}
+
+    /* modal = bottom sheet on phones */
+    .overlay{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:#1d0b0abf}
+    .sheet{position:relative;width:100%;max-width:440px;max-height:92vh;overflow:auto;background:var(--paper);border:2.5px solid var(--ink);border-bottom:0;border-radius:24px 24px 0 0;padding:16px 16px calc(22px + env(safe-area-inset-bottom));text-align:center;animation:up .22s ease-out}
+    @keyframes up{from{transform:translateY(40px);opacity:0}}
+    .sheet.wide{max-width:720px}.sheet.wide img{display:block;width:100%;border-radius:12px}
+    .close{position:absolute;top:10px;right:10px;z-index:2;width:40px;height:40px;border-radius:50%;background:var(--chili);color:#fff;border:2.5px solid var(--ink);font-size:24px;line-height:1;box-shadow:0 3px 0 var(--ink)}
+    .sheet-pic{width:100%;height:min(60vw,290px);object-fit:contain;background:var(--tint,#ffe7b3);border:2.5px solid var(--ink);border-radius:18px}
+    .sheet h3{margin:14px 0 0;font:italic 800 26px/1.4 Kanit,sans-serif}
+    .sheet p{margin:0;color:var(--muted);font-size:14px}
+    .sheet .big{margin-top:6px;font:800 40px/1.2 Kanit,sans-serif;color:var(--chili)}.big small{font-size:15px;font-weight:600;color:var(--muted);margin-left:4px}
+
+    @media(min-width:640px){
+      .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 18px}
+      .overlay{align-items:center;padding:20px}.sheet{border-bottom:2.5px solid var(--ink);border-radius:24px}
+      .poster{grid-template-columns:1fr 200px;padding:28px}.poster img{height:190px}
+    }
+    @media(min-width:800px){
+      .hero{padding:44px 0 52px}
+      .hero-in{grid-template-columns:1.1fr .9fr;text-align:left;justify-items:start;align-items:center;gap:30px}
+      .hero-logo{grid-column:2;grid-row:1;width:min(100%,380px);justify-self:center}.hero-copy{grid-column:1;grid-row:1}
+      .hero p{margin-left:0;font-size:17px}.badge{width:100px;height:100px}.badge span{font-size:13px}.badge b{font-size:32px}
+    }
+    @media(min-width:960px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
+<div id="app" v-cloak>
+  <div class="marquee" aria-hidden="true"><div class="marquee-track"><span v-for="n in 4" :key="n">🌶️ ทอดใหม่ทุกไม้ &nbsp; 🔥 คลุกผงหม่าล่าจัดเต็ม &nbsp; 🍢 เริ่มแค่ไม้ละ 10 บาท &nbsp;</span></div></div>
+
   <header class="hero">
-    <div class="eyebrow">🔥 ทอดสด • คลุกผงหม่าล่า</div>
-    <div class="hero-art" aria-hidden="true">🍢🌶️🍡</div>
-    <h1>หม่าล่าทอด</h1>
-    <p>กรอบ หอม เผ็ดชา อร่อยทุกไม้<br>เลือกดูเมนูและราคาได้ที่นี่</p>
-  </header>
-  <main class="container">
-    <div class="notice">📌 <strong>เมนูตัวอย่าง:</strong> ชื่ออาหารและราคาด้านล่างเป็นข้อมูลสมมติ เปลี่ยนเป็นเมนูจริงของร้านได้ในส่วน <strong>MENU</strong> ของโค้ด</div>
-    <div class="toolbar">
-      <input id="search" type="search" placeholder="🔎 ค้นหาเมนู เช่น ไส้กรอก ลูกชิ้น" aria-label="ค้นหาเมนู" />
-      <nav class="filters" id="filters" aria-label="หมวดหมู่เมนู"></nav>
+    <div class="shell hero-in">
+      <div class="hero-logo">
+        <img src="images/logo.png" alt="โลโก้ร้านล่าทอด หม่าล่าทอด" />
+        <div class="badge"><span>เริ่มแค่</span><b>10฿</b></div>
+      </div>
+      <div class="hero-copy">
+        <h1>หิวเมื่อไหร่<br />ก็ล่าทอด!</h1>
+        <p>ดูเมนูและราคาได้เลย เลือกไม้ที่ชอบแล้วสั่งกับพนักงานหรือทาง LINE</p>
+        <a class="btn" href="#menu">ดูเมนูทั้งหมด</a>
+      </div>
     </div>
-    <h2 class="section-title" id="heading">เมนูทั้งหมด</h2>
-    <div class="grid" id="menu"></div>
-    <p class="empty" id="empty" hidden>ไม่พบเมนูที่ค้นหา ลองค้นหาคำอื่นนะครับ</p>
+  </header>
+
+  <main class="shell" id="menu">
+    <div class="head"><h2>เมนูอร่อยของเรา</h2><span class="count">{{ filtered.length }} รายการ</span></div>
+    <label class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <input v-model="search" type="search" aria-label="ค้นหาเมนู" placeholder="ค้นหาเมนูที่ชอบ เช่น อกไก่ ไส้กรอก" />
+    </label>
+    <div class="tabs-wrap"><div class="tabs" aria-label="หมวดหมู่เมนู">
+      <button v-for="cat in categories" :key="cat" class="tab" :class="{active:activeCategory===cat}" @click="activeCategory=cat">{{icons[cat]}} {{cat}}<i>{{counts[cat]}}</i></button>
+    </div></div>
+
+    <div v-if="filtered.length" class="grid">
+      <button class="food" :class="'tone-'+tone[item.category]" v-for="item in filtered" :key="item.id" @click="selected=item" :aria-label="'ดูรายละเอียด '+item.name">
+        <div class="photo"><span class="tag">{{item.category}}</span><img :src="'images/'+item.image" :alt="item.name" loading="lazy" /><span class="price-badge">{{item.price}}<small>฿/ไม้</small></span></div>
+        <div class="info"><div class="name">{{item.name}}</div></div>
+      </button>
+    </div>
+    <div v-else class="empty"><strong>ไม่พบเมนูที่ค้นหา</strong><p>ลองพิมพ์ชื่ออื่น หรือกลับไปดูเมนูทั้งหมด</p><button class="btn" @click="search='';activeCategory='ทั้งหมด'">ดูเมนูทั้งหมด</button></div>
+
+    <section class="pay" id="order">
+      <div class="head"><h2>สั่งและจ่ายเงิน</h2></div>
+      <div class="pay-grid">
+        <div class="pay-card tone-veg">
+          <button class="thumb" @click="qr=qrs.line" aria-label="ดู QR Code LINE"><img src="images/line.png" alt="QR Code LINE ร้านล่าทอด" loading="lazy" /></button>
+          <div class="pay-body"><h3>สั่งทาง LINE</h3><a v-if="lineUrl" class="btn line" :href="lineUrl">เปิดแชต LINE</a><button class="btn alt" @click="qr=qrs.line">ดู QR Code</button></div>
+        </div>
+        <div class="pay-card tone-sausage">
+          <button class="thumb" @click="qr=qrs.pay" aria-label="ดู QR Code ชำระเงิน"><img src="images/qrcode.png" alt="QR Code ชำระเงิน PromptPay" loading="lazy" /></button>
+          <div class="pay-body"><h3>สแกนจ่ายเงิน</h3><button class="btn alt" @click="qr=qrs.pay">ดู QR Code</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="poster">
+      <div><h2>ดูเมนูแบบโปสเตอร์</h2><p>เปิดภาพเมนูฉบับเต็มของร้าน พร้อมรายการและราคา</p><button class="btn" @click="showPoster=true">เปิดโปสเตอร์เมนู</button></div>
+      <img src="images/poster.png" alt="โปสเตอร์เมนูร้านล่าทอด" loading="lazy" />
+    </section>
   </main>
-  <footer class="footer">🌶️ หม่าล่าทอด • ยินดีต้อนรับทุกคน<br>สอบถามเพิ่มเติมได้ที่พนักงานหน้าร้าน</footer>
-  <script>
-    // แก้ชื่อ ราคา หมวดหมู่ และ emoji ได้ตรงนี้
-    const MENU = [
-      {name:'ไส้กรอกแดง',price:10,unit:'ไม้',category:'ไส้กรอก',emoji:'🌭',desc:'ทอดกรอบ เคี้ยวเพลิน'},
-      {name:'ไส้กรอกชีส',price:15,unit:'ไม้',category:'ไส้กรอก',emoji:'🧀',desc:'ชีสหอม ๆ'},
-      {name:'ลูกชิ้นหมู',price:10,unit:'ไม้',category:'ลูกชิ้น',emoji:'🍡',desc:'เด้งนุ่ม เต็มคำ'},
-      {name:'ลูกชิ้นปลา',price:10,unit:'ไม้',category:'ลูกชิ้น',emoji:'🍥',desc:'รสกลมกล่อม'},
-      {name:'ปูอัด',price:15,unit:'ไม้',category:'ของทอด',emoji:'🦀',desc:'ทอดใหม่ทุกออเดอร์'},
-      {name:'เต้าหู้ปลา',price:15,unit:'ไม้',category:'ของทอด',emoji:'🍢',desc:'นุ่มใน กรอบนอก'},
-      {name:'เห็ดเข็มทอง',price:15,unit:'ไม้',category:'ผัก',emoji:'🍄',desc:'กรุบกรอบ หอมเครื่องเทศ'},
-      {name:'บรอกโคลี',price:10,unit:'ไม้',category:'ผัก',emoji:'🥦',desc:'ผักสดทอดร้อน ๆ'},
-      {name:'น้ำเปล่า',price:10,unit:'ขวด',category:'เครื่องดื่ม',emoji:'💧',desc:'เย็นชื่นใจ'},
-      {name:'น้ำอัดลม',price:20,unit:'กระป๋อง',category:'เครื่องดื่ม',emoji:'🥤',desc:'เข้ากับหม่าล่าทอด'}
-    ];
-    const categories=['ทั้งหมด',...new Set(MENU.map(x=>x.category))];
-    const filterEl=document.getElementById('filters'),menuEl=document.getElementById('menu'),searchEl=document.getElementById('search');
-    let current='ทั้งหมด';
-    function render(){
-      filterEl.replaceChildren(...categories.map(c=>{const b=document.createElement('button');b.textContent=c;b.className=c===current?'active':'';b.setAttribute('aria-pressed',String(c===current));b.onclick=()=>{current=c;render()};return b}));
-      const q=searchEl.value.trim().toLocaleLowerCase('th');
-      const shown=MENU.filter(x=>(current==='ทั้งหมด'||x.category===current)&&x.name.toLocaleLowerCase('th').includes(q));
-      document.getElementById('heading').textContent=current==='ทั้งหมด'?'เมนูทั้งหมด':current;
-      menuEl.replaceChildren(...shown.map(x=>{
-        const article=document.createElement('article');article.className='item';
-        const art=document.createElement('div');art.className='art';art.textContent=x.emoji;art.setAttribute('aria-hidden','true');
-        const details=document.createElement('div');details.className='details';
-        const name=document.createElement('div');name.className='name';name.textContent=x.name;
-        const desc=document.createElement('div');desc.className='desc';desc.textContent=x.desc;
-        const price=document.createElement('div');price.className='price';price.textContent=`฿${x.price} `;
-        const unit=document.createElement('span');unit.className='unit';unit.textContent=`/ ${x.unit}`;price.append(unit);
-        details.append(name,desc,price);article.append(art,details);return article;
-      }));
-      document.getElementById('empty').hidden=shown.length>0;
-    }
-    searchEl.addEventListener('input',render);render();
-  </script>
+
+  <footer><img src="images/poster.png" alt="" /><strong>ล่าทอด หม่าล่าทอด</strong><p>ทอดใหม่ทุกไม้ หอม กรอบ อร่อย</p><p>สั่งอาหารกับพนักงานที่ร้าน หรือสั่งผ่าน LINE ของร้านได้เลย</p></footer>
+
+  <div v-if="selected" class="overlay" @click.self="selected=null" role="dialog" aria-modal="true" :aria-label="selected.name">
+    <div class="sheet" :class="'tone-'+tone[selected.category]"><button class="close" @click="selected=null" aria-label="ปิด">×</button>
+      <img class="sheet-pic" :src="'images/'+selected.image" :alt="selected.name" />
+      <h3>{{selected.name}}</h3><p>{{selected.category}}</p><div class="big">{{selected.price}} บาท<small>/ ไม้</small></div>
+    </div>
+  </div>
+  <div v-if="showPoster" class="overlay" @click.self="showPoster=false" role="dialog" aria-modal="true" aria-label="โปสเตอร์เมนู">
+    <div class="sheet wide"><button class="close" @click="showPoster=false" aria-label="ปิด">×</button><img src="images/poster.png" alt="โปสเตอร์เมนูร้าน" /></div>
+  </div>
+  <div v-if="qr" class="overlay" @click.self="qr=null" role="dialog" aria-modal="true" :aria-label="qr.alt">
+    <div class="sheet"><button class="close" @click="qr=null" aria-label="ปิด">×</button><img :src="qr.src" :alt="qr.alt" style="display:block;width:100%;border-radius:12px" /><p class="hint">{{qr.hint}}</p></div>
+  </div>
+</div>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const { createApp, ref, computed, watch } = Vue;
+  createApp({ setup() {
+    // แก้ชื่อ ราคา หมวดหมู่ และชื่อไฟล์รูปได้ที่รายการด้านล่าง
+    const menu = ref([
+      {id:1,name:'อกไก่',price:10,category:'เนื้อสัตว์',image:'05_chicken.png'},
+      {id:2,name:'หมูสามชั้น',price:12,category:'เนื้อสัตว์',image:'10_pork_skewer.png'},
+      {id:3,name:'หมูสามชั้นพันเห็ดเข็มทอง',price:12,category:'เนื้อสัตว์',image:'09_enoki_bacon.png'},
+      {id:4,name:'หมูสามชั้นพันสาหร่าย',price:12,category:'เนื้อสัตว์',image:'04_seaweed_bacon.png'},
+      {id:5,name:'ไส้กรอกชีส',price:10,category:'ลูกชิ้นและไส้กรอก',image:'14_sausage.png'},
+      {id:6,name:'ปูอัดเมก้า',price:10,category:'ลูกชิ้นและไส้กรอก',image:'11_crab_stick.png'},
+      {id:7,name:'โบโลน่า',price:10,category:'ลูกชิ้นและไส้กรอก',image:'13_folded_ham.png'},
+      {id:8,name:'ฟองเต้าหู้ซีฟู้ด',price:10,category:'ลูกชิ้นและไส้กรอก',image:'06_triangle_fishcake.png'},
+      {id:9,name:'เบค่อนพันไส้กรอก',price:10,category:'ลูกชิ้นและไส้กรอก',image:'17_bacon_rolls.png'},
+      {id:10,name:'เต้าหู้ชีส',price:12,category:'ลูกชิ้นและไส้กรอก',image:'20_golden_fish_balls.png'},
+      {id:11,name:'เต้าหู้ปลา',price:10,category:'ลูกชิ้นและไส้กรอก',image:'16_tofu_blocks.png'},
+      {id:12,name:'เต้าหู้หมู',price:10,category:'ลูกชิ้นและไส้กรอก',image:'12_fishcake_balls.png'},
+      {id:13,name:'ไส้กรอกแดง',price:10,category:'ลูกชิ้นและไส้กรอก',image:'19_meat_pieces.png'},
+      {id:14,name:'มินิสเต็กหมู',price:10,category:'ลูกชิ้นและไส้กรอก',image:'15_stuffed_sausage_slices.png'},
+      {id:15,name:'เต้าหู้โมจิ',price:10,category:'ลูกชิ้นและไส้กรอก',image:'18_crispy_tofu.png'},
+      {id:16,name:'บรอกโคลี',price:10,category:'ผัก',image:'01_broccoli.png'},
+      {id:17,name:'มันฝรั่ง',price:10,category:'ผัก',image:'02_potato.png'},
+      {id:18,name:'ฟักทอง',price:10,category:'ผัก',image:'03_pumpkin.png'},
+      {id:19,name:'กระเจี๊ยบ',price:10,category:'ผัก',image:'08_okra.png'},
+      {id:20,name:'เห็ดออรินจิ',price:10,category:'ผัก',image:'07_king_oyster_mushroom.png'}
+    ]);
+    // ใส่ลิงก์ LINE OA ของร้านตรงนี้ เช่น 'https://line.me/R/ti/p/@xxxxxxx' (ถ้าเว้นว่าง ปุ่ม "เปิดแชต LINE" จะไม่แสดง)
+    const lineUrl = '';
+    const qrs = {
+      line:{src:'images/line.png',alt:'QR Code LINE ร้านล่าทอด',hint:'กดค้างที่รูปเพื่อบันทึก แล้วสแกนจาก LINE ได้เลย'},
+      pay:{src:'images/qrcode.png',alt:'QR Code ชำระเงิน PromptPay',hint:'กดค้างที่รูปเพื่อบันทึก แล้วเปิดแอปธนาคาร เลือกสแกนจากรูปในอัลบั้ม'}
+    };
+    const categories = ['ทั้งหมด','เนื้อสัตว์','ลูกชิ้นและไส้กรอก','ผัก'];
+    // ไอคอนและโทนสีของแต่ละหมวด (ถ้าเพิ่มหมวดใหม่ ให้เพิ่มที่นี่ด้วย)
+    const icons = {'ทั้งหมด':'🍢','เนื้อสัตว์':'🥓','ลูกชิ้นและไส้กรอก':'🌭','ผัก':'🥦'};
+    const tone = {'เนื้อสัตว์':'meat','ลูกชิ้นและไส้กรอก':'sausage','ผัก':'veg'};
+    const counts = computed(()=>Object.fromEntries(categories.map(c=>[c,c==='ทั้งหมด'?menu.value.length:menu.value.filter(i=>i.category===c).length])));
+    const activeCategory=ref('ทั้งหมด'), search=ref(''), selected=ref(null), showPoster=ref(false), qr=ref(null);
+    const filtered=computed(()=>menu.value.filter(item=>(activeCategory.value==='ทั้งหมด'||item.category===activeCategory.value)&&item.name.toLocaleLowerCase().includes(search.value.trim().toLocaleLowerCase())));
+    watch([selected,showPoster,qr],()=>{document.body.style.overflow=(selected.value||showPoster.value||qr.value)?'hidden':''});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){selected.value=null;showPoster.value=false;qr.value=null}});
+    return {categories,icons,tone,counts,activeCategory,search,selected,showPoster,filtered,qr,qrs,lineUrl};
+  }}).mount('#app');
+});
+</script>
 </body>
 </html>
