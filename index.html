@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17120f" />
+  <meta name="description" content="เมนูหม่าล่าทอด ดูราคาและรายการอาหารในร้าน" />
+  <title>หม่าล่าทอด | เมนูร้าน</title>
+  <style>
+    :root { --bg:#17120f;--panel:#251d18;--panel2:#32251c;--gold:#ffcb6b;--orange:#ff782f;--text:#fff8ec;--muted:#c9b9a8; }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Noto Sans Thai',Tahoma,sans-serif;line-height:1.5}
+    .hero{padding:46px 20px 32px;text-align:center;background:radial-gradient(circle at 50% 0%,#723017 0%,#311c16 45%,#17120f 100%)}
+    .eyebrow{display:inline-block;border:1px solid #9c5735;border-radius:99px;padding:6px 14px;color:var(--gold);font-size:13px;letter-spacing:.5px}
+    h1{font-size:clamp(36px,8vw,58px);line-height:1.1;margin:18px 0 10px;color:var(--gold)}.hero p{color:#f2d6bc;margin:0 auto;max-width:440px}
+    .hero-art{font-size:75px;margin:16px 0 6px;filter:drop-shadow(0 10px 18px #0008)}
+    .container{max-width:980px;margin:auto;padding:20px 16px 55px}.notice{background:#35251b;border:1px solid #6a4631;border-radius:16px;padding:15px 18px;margin-bottom:20px;color:#f9ddba;font-size:14px}
+    .toolbar{position:sticky;top:0;z-index:2;background:#17120ff2;backdrop-filter:blur(12px);padding:12px 0 14px}
+    input{width:100%;border:1px solid #5b4433;background:#30231c;border-radius:12px;padding:13px 16px;font:inherit;color:white;outline:none}input:focus{border-color:var(--gold)}
+    .filters{display:flex;gap:8px;overflow-x:auto;padding:12px 0 2px;scrollbar-width:none}.filters::-webkit-scrollbar{display:none}
+    button{cursor:pointer;font:inherit;border-radius:999px;border:1px solid #614532;background:#30231c;color:#f6e4d0;padding:8px 16px;white-space:nowrap}button.active{background:var(--orange);color:#1c100a;border-color:var(--orange);font-weight:750}
+    .section-title{margin:24px 0 14px;font-size:24px;color:var(--gold)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+    .item{background:var(--panel);border:1px solid #49372b;border-radius:18px;overflow:hidden}.art{height:142px;display:flex;align-items:center;justify-content:center;font-size:67px;background:radial-gradient(circle at 50% 35%,#75452a,#39241b 75%);text-shadow:0 8px 14px #0005}
+    .details{padding:13px}.name{font-weight:750;font-size:17px}.desc{font-size:12px;color:var(--muted);margin:4px 0 12px;min-height:18px}.price{font-size:22px;font-weight:850;color:var(--gold)}.unit{font-size:12px;color:var(--muted);font-weight:400}
+    .empty{text-align:center;color:var(--muted);padding:50px 10px}.footer{text-align:center;color:var(--muted);border-top:1px solid #3e3027;padding:28px 16px;font-size:13px}
+    @media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.art{height:185px}.container{padding-left:24px;padding-right:24px}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="eyebrow">🔥 ทอดสด • คลุกผงหม่าล่า</div>
+    <div class="hero-art" aria-hidden="true">🍢🌶️🍡</div>
+    <h1>หม่าล่าทอด</h1>
+    <p>กรอบ หอม เผ็ดชา อร่อยทุกไม้<br>เลือกดูเมนูและราคาได้ที่นี่</p>
+  </header>
+  <main class="container">
+    <div class="notice">📌 <strong>เมนูตัวอย่าง:</strong> ชื่ออาหารและราคาด้านล่างเป็นข้อมูลสมมติ เปลี่ยนเป็นเมนูจริงของร้านได้ในส่วน <strong>MENU</strong> ของโค้ด</div>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="🔎 ค้นหาเมนู เช่น ไส้กรอก ลูกชิ้น" aria-label="ค้นหาเมนู" />
+      <nav class="filters" id="filters" aria-label="หมวดหมู่เมนู"></nav>
+    </div>
+    <h2 class="section-title" id="heading">เมนูทั้งหมด</h2>
+    <div class="grid" id="menu"></div>
+    <p class="empty" id="empty" hidden>ไม่พบเมนูที่ค้นหา ลองค้นหาคำอื่นนะครับ</p>
+  </main>
+  <footer class="footer">🌶️ หม่าล่าทอด • ยินดีต้อนรับทุกคน<br>สอบถามเพิ่มเติมได้ที่พนักงานหน้าร้าน</footer>
+  <script>
+    // แก้ชื่อ ราคา หมวดหมู่ และ emoji ได้ตรงนี้
+    const MENU = [
+      {name:'ไส้กรอกแดง',price:10,unit:'ไม้',category:'ไส้กรอก',emoji:'🌭',desc:'ทอดกรอบ เคี้ยวเพลิน'},
+      {name:'ไส้กรอกชีส',price:15,unit:'ไม้',category:'ไส้กรอก',emoji:'🧀',desc:'ชีสหอม ๆ'},
+      {name:'ลูกชิ้นหมู',price:10,unit:'ไม้',category:'ลูกชิ้น',emoji:'🍡',desc:'เด้งนุ่ม เต็มคำ'},
+      {name:'ลูกชิ้นปลา',price:10,unit:'ไม้',category:'ลูกชิ้น',emoji:'🍥',desc:'รสกลมกล่อม'},
+      {name:'ปูอัด',price:15,unit:'ไม้',category:'ของทอด',emoji:'🦀',desc:'ทอดใหม่ทุกออเดอร์'},
+      {name:'เต้าหู้ปลา',price:15,unit:'ไม้',category:'ของทอด',emoji:'🍢',desc:'นุ่มใน กรอบนอก'},
+      {name:'เห็ดเข็มทอง',price:15,unit:'ไม้',category:'ผัก',emoji:'🍄',desc:'กรุบกรอบ หอมเครื่องเทศ'},
+      {name:'บรอกโคลี',price:10,unit:'ไม้',category:'ผัก',emoji:'🥦',desc:'ผักสดทอดร้อน ๆ'},
+      {name:'น้ำเปล่า',price:10,unit:'ขวด',category:'เครื่องดื่ม',emoji:'💧',desc:'เย็นชื่นใจ'},
+      {name:'น้ำอัดลม',price:20,unit:'กระป๋อง',category:'เครื่องดื่ม',emoji:'🥤',desc:'เข้ากับหม่าล่าทอด'}
+    ];
+    const categories=['ทั้งหมด',...new Set(MENU.map(x=>x.category))];
+    const filterEl=document.getElementById('filters'),menuEl=document.getElementById('menu'),searchEl=document.getElementById('search');
+    let current='ทั้งหมด';
+    function render(){
+      filterEl.replaceChildren(...categories.map(c=>{const b=document.createElement('button');b.textContent=c;b.className=c===current?'active':'';b.setAttribute('aria-pressed',String(c===current));b.onclick=()=>{current=c;render()};return b}));
+      const q=searchEl.value.trim().toLocaleLowerCase('th');
+      const shown=MENU.filter(x=>(current==='ทั้งหมด'||x.category===current)&&x.name.toLocaleLowerCase('th').includes(q));
+      document.getElementById('heading').textContent=current==='ทั้งหมด'?'เมนูทั้งหมด':current;
+      menuEl.replaceChildren(...shown.map(x=>{
+        const article=document.createElement('article');article.className='item';
+        const art=document.createElement('div');art.className='art';art.textContent=x.emoji;art.setAttribute('aria-hidden','true');
+        const details=document.createElement('div');details.className='details';
+        const name=document.createElement('div');name.className='name';name.textContent=x.name;
+        const desc=document.createElement('div');desc.className='desc';desc.textContent=x.desc;
+        const price=document.createElement('div');price.className='price';price.textContent=`฿${x.price} `;
+        const unit=document.createElement('span');unit.className='unit';unit.textContent=`/ ${x.unit}`;price.append(unit);
+        details.append(name,desc,price);article.append(art,details);return article;
+      }));
+      document.getElementById('empty').hidden=shown.length>0;
+    }
+    searchEl.addEventListener('input',render);render();
+  </script>
+</body>
+</html>
